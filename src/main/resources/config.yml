@@ -1,0 +1,197 @@
+# Join/Quit Messages Configuration
+join-quit-messages:
+  enabled: true
+  hide-join-messages: false
+  hide-quit-messages: false
+  custom-join-message: "&e%player% joined the game"
+  custom-quit-message: "&e%player% left the game"
+
+# IP Whitelist Configuration
+ip-whitelist:
+  enabled: false
+  kick-message: "&cYou are not authorized to join from this IP!"
+  log-attempts: true
+  whitelist:
+    # Format: "player_uuid": "ip_address"
+    # Example: "550e8400-e29b-41d4-a716-446655440000": "192.168.1.100"
+
+# Bot Bypass Configuration
+bot-bypass:
+  enabled: true
+  bypass-ip-whitelist: true
+  bypass-ping-kick: true
+  bypass-resource-limits: false
+  bot-names:
+    - "Bot"
+    - "AFK"
+    - "NPC"
+  # Add specific player UUIDs that should be treated as bots
+  bot-uuids: []
+
+# Sleep System Configuration
+sleep-system:
+  enabled: true
+  delay-seconds: 3
+
+# Server Optimization Configuration
+optimization:
+  enabled: true
+  aggressive-mode: true
+  
+  # Entity Limiting
+  entity-limits:
+    enabled: true
+    max-entities-per-chunk: 25
+    remove-excess-entities: true
+    check-interval-seconds: 10
+    
+  # Chunk Optimization
+  chunk-optimization:
+    enabled: true
+    max-loaded-chunks: 5000
+    unload-idle-chunks: true
+    idle-chunk-time-seconds: 60
+    
+  # Item Stacking
+  item-stacking:
+    enabled: true
+    stack-radius: 3
+    check-interval-seconds: 5
+    max-stack-size: 64
+    
+  # Mob Spawn Control
+  mob-spawn-control:
+    enabled: true
+    max-mobs-per-player: 50
+    spawn-radius-check: 64
+    prevent-overcrowding: true
+    
+  # Redstone Optimization
+  redstone-optimization:
+    enabled: true
+    limit-clock-frequency: true
+    max-clock-ticks-per-second: 10
+    optimize-tile-entities: true
+    
+  # TPS Monitoring
+  tps-monitoring:
+    enabled: true
+    target-tps: 20.0
+    check-interval-seconds: 5
+    log-tps-drops: true
+    auto-optimize-on-low-tps: true
+    low-tps-threshold: 18.0
+
+# Ping and Network Optimization Configuration
+ping-optimization:
+  enabled: true
+  
+  # Ping Monitoring
+  ping-monitoring:
+    enabled: true
+    check-interval-seconds: 10
+    log-high-ping: true
+    high-ping-threshold: 2000
+    
+  # High Ping Management
+  high-ping-management:
+    enabled: true
+    kick-high-ping: false
+    kick-threshold: 5000
+    kick-message: "&cYour ping is too high! Please improve your connection."
+    warn-before-kick: false
+    warn-threshold: 3000
+    warning-message: "&eWarning: Your ping is high! Consider improving your connection."
+    
+  # Network Optimization
+  network-optimization:
+    enabled: true
+    optimize-packet-handling: true
+    reduce-network-overhead: true
+    optimize-entity-tracking: true
+    batch-updates: true
+    compression-level: 6
+
+# RAM and CPU Optimization Configuration
+resource-optimization:
+  enabled: true
+  
+  # Resource Monitoring
+  resource-monitoring:
+    enabled: true
+    check-interval-seconds: 30
+    log-resource-usage: true
+    notify-operators: true
+    
+  # Resource Thresholds
+  thresholds:
+    ram-warning: 70
+    ram-critical: 85
+    cpu-warning: 70
+    cpu-critical: 85
+    
+  # Automatic Resource Management
+  auto-resource-management:
+    enabled: true
+    trigger-on-warning: true
+    
+  # Resource-Based Actions
+  resource-actions:
+    # Aggressive Chunk Unloading
+    aggressive-chunk-unloading:
+      enabled: true
+      trigger-ram: 70
+      reduce-chunk-limit: 30
+      reduce-idle-time: 20
+      
+    # Disable Non-Essential Features
+    disable-non-essential:
+      enabled: true
+      trigger-ram: 75
+      disable-features:
+        - item-stacking
+        - ping-monitoring
+        - detailed-logging
+        
+    # Force Garbage Collection
+    force-garbage-collection:
+      enabled: true
+      trigger-ram: 70
+      gc-interval-seconds: 60
+      log-gc: true
+      
+    # Reduce Task Frequency
+    reduce-task-frequency:
+      enabled: true
+      trigger-cpu: 70
+      frequency-multiplier: 2.0
+      affected-tasks:
+        - optimization
+        - entity-check
+        - ping-check
+        
+  # Memory Cleanup
+  memory-cleanup:
+    enabled: true
+    cleanup-interval-seconds: 120
+    clear-cached-data: true
+    clear-unused-references: true
+    optimize-collections: true
+    
+  # Code Optimization Settings
+  code-optimization:
+    enabled: true
+    use-efficient-collections: true
+    minimize-object-creation: true
+    reuse-objects: true
+    async-operations: true
+
+# Help Menu Configuration
+help-menu:
+  enabled: true
+  interactive: true
+  show-on-no-args: true
+  header-color: "&6"
+  command-color: "&a"
+  description-color: "&7"
+  clickable-commands: true
