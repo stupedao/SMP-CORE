@@ -22,7 +22,7 @@ public class EntitySpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onEntitySpawn(EntitySpawnEvent event) {
-        if (!plugin.getEntityManager().isEnabled()) {
+        if (plugin.getEntityManager() == null || !plugin.getEntityManager().isEnabled()) {
             return;
         }
 
@@ -51,7 +51,7 @@ public class EntitySpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (!plugin.getOptimizationManager().isEnabled()) {
+        if (plugin.getOptimizationManager() == null || !plugin.getOptimizationManager().isEnabled()) {
             return;
         }
 

@@ -1,16 +1,52 @@
+# SMPCORE Configuration - Optimized Version
+# Author: Stupedo
+
 # Join/Quit Messages Configuration
 join-quit-messages:
   enabled: true
-  hide-join-messages: false
-  hide-quit-messages: false
-  custom-join-message: "&e%player% joined the game"
-  custom-quit-message: "&e%player% left the game"
+  hide-join-messages: true
+  hide-quit-messages: true
+  hide-messages: true
+  global:
+    hide-join-messages: false
+    hide-quit-messages: false
+  custom-join-message: ""
+  custom-quit-message: ""
+  per-player:
+    enabled: false
+    exempt-permission: "smpcore.bypass.joinmessages"
+    exempt-players: []
+  filtering:
+    enabled: false
+    hide-on-first-join: false
+    hide-on-vanish: true
+    hide-npc-joins: true
+    hide-bot-joins: true
+    minimum-playtime: 0
+  integration:
+    respect-vanish: true
+    respect-afk: false
+    hide-during-low-tps: false
+    low-tps-threshold: 15.0
+  formatting:
+    use-prefix: false
+    prefix: "&8[&e&l⚡&8] "
+    suffix: ""
+    hover-text: ""
+    click-command: ""
+
+# Auto-IP Registration Configuration
+auto-ip:
+  enabled: false
+  mode: keep-first
+  log-auto-adds: false
+  total-auto-added: 0
 
 # IP Whitelist Configuration
 ip-whitelist:
   enabled: false
   kick-message: "&cYou are not authorized to join from this IP!"
-  log-attempts: true
+  log-attempts: false
   whitelist:
     # Format: "player_uuid": "ip_address"
     # Example: "550e8400-e29b-41d4-a716-446655440000": "192.168.1.100"
@@ -25,7 +61,6 @@ bot-bypass:
     - "Bot"
     - "AFK"
     - "NPC"
-  # Add specific player UUIDs that should be treated as bots
   bot-uuids: []
 
 # Sleep System Configuration
@@ -33,69 +68,83 @@ sleep-system:
   enabled: true
   delay-seconds: 3
 
-# Server Optimization Configuration
+# Server Optimization Configuration - LIGHTWEIGHT
 optimization:
   enabled: true
-  aggressive-mode: true
+  aggressive-mode: false
+  force-tps-20: false
   
-  # Entity Limiting
+  # Entity Limiting - DISABLED
   entity-limits:
-    enabled: true
-    max-entities-per-chunk: 25
-    remove-excess-entities: true
-    check-interval-seconds: 10
+    enabled: false
+    max-entities-per-chunk: 50
+    remove-excess-entities: false
+    check-interval-seconds: 60
+    per-type-limits:
+      animals: 30
+      monsters: 20
+      villagers: 10
+      water-animals: 15
+      flying: 10
     
-  # Chunk Optimization
+  # Chunk Optimization - LIGHT
   chunk-optimization:
-    enabled: true
-    max-loaded-chunks: 5000
-    unload-idle-chunks: true
-    idle-chunk-time-seconds: 60
+    enabled: false
+    max-loaded-chunks: 10000
+    unload-idle-chunks: false
+    idle-chunk-time-seconds: 300
+    predictive-loading: false
+    preload-distance: 1
     
-  # Item Stacking
+  # Item Stacking - DISABLED
   item-stacking:
-    enabled: true
-    stack-radius: 3
-    check-interval-seconds: 5
+    enabled: false
+    stack-radius: 5
+    check-interval-seconds: 30
     max-stack-size: 64
     
-  # Mob Spawn Control
+  # Mob Spawn Control - DISABLED
   mob-spawn-control:
-    enabled: true
-    max-mobs-per-player: 50
-    spawn-radius-check: 64
-    prevent-overcrowding: true
+    enabled: false
+    max-mobs-per-player: 100
+    spawn-radius-check: 128
+    prevent-overcrowding: false
     
-  # Redstone Optimization
+  # Redstone Optimization - DISABLED
   redstone-optimization:
-    enabled: true
-    limit-clock-frequency: true
-    max-clock-ticks-per-second: 10
-    optimize-tile-entities: true
+    enabled: false
+    limit-clock-frequency: false
+    max-clock-ticks-per-second: 5
+    optimize-tile-entities: false
+    max-redstone-updates-per-tick: 200
+    disable-during-low-tps: false
+    low-tps-threshold: 18.0
     
-  # TPS Monitoring
+  # TPS Monitoring - LIGHT
   tps-monitoring:
     enabled: true
     target-tps: 20.0
-    check-interval-seconds: 5
-    log-tps-drops: true
-    auto-optimize-on-low-tps: true
+    check-interval-seconds: 30
+    log-tps-drops: false
+    auto-optimize-on-low-tps: false
     low-tps-threshold: 18.0
+    force-tps-20: false
+    aggressive-optimization: false
 
-# Ping and Network Optimization Configuration
+# Ping and Network Optimization - LIGHT
 ping-optimization:
   enabled: true
   
   # Ping Monitoring
   ping-monitoring:
-    enabled: true
-    check-interval-seconds: 10
-    log-high-ping: true
-    high-ping-threshold: 2000
+    enabled: false
+    check-interval-seconds: 30
+    log-high-ping: false
+    high-ping-threshold: 5000
     
   # High Ping Management
   high-ping-management:
-    enabled: true
+    enabled: false
     kick-high-ping: false
     kick-threshold: 5000
     kick-message: "&cYour ping is too high! Please improve your connection."
@@ -103,95 +152,309 @@ ping-optimization:
     warn-threshold: 3000
     warning-message: "&eWarning: Your ping is high! Consider improving your connection."
     
-  # Network Optimization
+  # Network Optimization - DISABLED
   network-optimization:
-    enabled: true
-    optimize-packet-handling: true
-    reduce-network-overhead: true
-    optimize-entity-tracking: true
-    batch-updates: true
+    enabled: false
+    optimize-packet-handling: false
+    reduce-network-overhead: false
+    optimize-entity-tracking: false
+    batch-updates: false
     compression-level: 6
+    advanced-compression: false
+    delta-compression: false
 
-# RAM and CPU Optimization Configuration
+# RAM and CPU Optimization - MINIMAL
 resource-optimization:
-  enabled: true
+  enabled: false
   
   # Resource Monitoring
   resource-monitoring:
-    enabled: true
-    check-interval-seconds: 30
-    log-resource-usage: true
-    notify-operators: true
+    enabled: false
+    check-interval-seconds: 60
+    log-resource-usage: false
+    notify-operators: false
     
   # Resource Thresholds
   thresholds:
-    ram-warning: 70
-    ram-critical: 85
-    cpu-warning: 70
-    cpu-critical: 85
+    ram-warning: 80
+    ram-critical: 90
+    cpu-warning: 80
+    cpu-critical: 90
     
-  # Automatic Resource Management
+  # Automatic Resource Management - DISABLED
   auto-resource-management:
-    enabled: true
-    trigger-on-warning: true
+    enabled: false
+    trigger-on-warning: false
     
-  # Resource-Based Actions
-  resource-actions:
-    # Aggressive Chunk Unloading
-    aggressive-chunk-unloading:
-      enabled: true
-      trigger-ram: 70
-      reduce-chunk-limit: 30
-      reduce-idle-time: 20
-      
-    # Disable Non-Essential Features
-    disable-non-essential:
-      enabled: true
-      trigger-ram: 75
-      disable-features:
-        - item-stacking
-        - ping-monitoring
-        - detailed-logging
-        
-    # Force Garbage Collection
-    force-garbage-collection:
-      enabled: true
-      trigger-ram: 70
-      gc-interval-seconds: 60
-      log-gc: true
-      
-    # Reduce Task Frequency
-    reduce-task-frequency:
-      enabled: true
-      trigger-cpu: 70
-      frequency-multiplier: 2.0
-      affected-tasks:
-        - optimization
-        - entity-check
-        - ping-check
-        
-  # Memory Cleanup
+  # Memory Cleanup - DISABLED
   memory-cleanup:
-    enabled: true
-    cleanup-interval-seconds: 120
-    clear-cached-data: true
-    clear-unused-references: true
-    optimize-collections: true
+    enabled: false
+    cleanup-interval-seconds: 300
+    clear-cached-data: false
+    clear-unused-references: false
+    optimize-collections: false
+    advanced-memory-management: false
+    object-pooling: false
     
-  # Code Optimization Settings
+  # Code Optimization Settings - DISABLED
   code-optimization:
-    enabled: true
-    use-efficient-collections: true
-    minimize-object-creation: true
-    reuse-objects: true
-    async-operations: true
+    enabled: false
+    use-efficient-collections: false
+    minimize-object-creation: false
+    reuse-objects: false
+    async-operations: false
+    parallel-processing: false
+    algorithm-optimization: false
 
-# Help Menu Configuration
-help-menu:
+# LagFixer Module Configurations - ALL DISABLED
+mob-ai-reducer:
+  enabled: false
+  worlds: ['*']
+  collides: true
+  silent: false
+  async: false
+  force_load: false
+  click_event: false
+  purge_interval: 60
+  ignore_models: true
+  spawn_reasons:
+    - NATURAL
+    - SPAWNER_EGG
+    - SPAWNER
+    - EGG
+    - BREEDING
+    - DISPENSE_EGG
+    - ENDER_PEARL
+    - COMMAND
+  entities:
+    animals: false
+    monsters: false
+    villagers: false
+    tameable: false
+    birds: false
+    others: false
+    list_mode: false
+    list: []
+
+world-cleaner:
+  enabled: false
+  items:
+    enabled: false
+    interval: 300
+    max-lived: 600
+    blacklist: []
+    whitelist: []
+    list_mode: false
+    list: []
+    notify: false
+    notify-title: "&cWarning"
+    notify-subtitle: "&7Too many items on ground"
+    notify-actionbar: true
+    actionbar-message: "&cToo many items on ground! Cleaning up..."
+  creatures:
+    enabled: false
+    interval: 300
+    named: false
+    drop_items: true
+    ignore_models: true
+    list_mode: true
+    list:
+      - ZOMBIE
+      - SKELETON
+      - SPIDER
+      - CAVESPIDER
+      - CREEPER
+      - ENDERMAN
+      - WITCH
+      - SLIME
+      - MAGMACUBE
+      - PHANTOM
+      - DROWNED
+      - ZOMBIE_VILLAGER
+      - HUSK
+      - STRAY
+      - BLAZE
+      - GHAST
+    notify: true
+    notify-title: "&cWarning"
+    notify-subtitle: "&7Too many creatures"
+    notify-actionbar: true
+    actionbar-message: "&cToo many creatures! Cleaning up..."
+  projectiles:
+    enabled: false
+    interval: 300
+    max-lived: 600
+    whitelist: []
+    blacklist: []
+    list_mode: false
+    list: []
+    notify: true
+    notify-title: "&cWarning"
+    notify-subtitle: "&7Too many projectiles"
+    notify-actionbar: true
+    actionbar-message: "&cToo many projectiles! Cleaning up..."
+  vehicles:
+    enabled: false
+    interval: 300
+    unused-minecarts: false
+    unused-boats: false
+    notify: true
+    notify-title: "&cWarning"
+    notify-subtitle: "&7Too many vehicles"
+    notify-actionbar: true
+    actionbar-message: "&cToo many vehicles! Cleaning up..."
+
+lag-shield:
+  enabled: false
+  check-interval: 60
+  tps-thresholds:
+    safe: 19.0
+    warning: 18.0
+    critical: 16.0
+    emergency: 14.0
+  emergency-mode:
+    enabled: false
+    actions:
+      - disable-heavy-features
+      - reduce-mob-spawns
+      - clear-lag
+    disable-heavy-features:
+      - world-cleaner
+      - mob-ai-reducer
+      - explosion-optimizer
+    reduce-mob-spawns: 50
+    clear-lag:
+      remove-items: true
+      remove-mobs: false
+      remove-projectiles: true
+  features:
+    leaves_decay:
+      enabled: true
+    item-despawn:
+      enabled: true
+    entity-ai:
+      enabled: false
+    redstone:
+      enabled: false
+    hopper:
+      enabled: false
+  worlds: ['*']
+
+explosion-optimizer:
+  enabled: false
+  worlds: ['*']
+  limit-explosions: true
+  max-explosions-per-tick: 10
+  max-tnt-power: 4.0
+  max-creeper-power: 3.0
+  max-end-crystal-power: 5.0
+  chain-reaction-delay: 10
+  prevent-chain-reactions: false
+  notify: true
+  notify-message: "&cExplosion limited to prevent lag"
+
+hopper-optimizer:
+  enabled: false
+  tick-interval: 8
+  optimize-transfers: false
+  max-transfers-per-tick: 10
+
+vehicle-optimizer:
+  enabled: false
+  check-interval: 120
+  remove-unused-minecarts: false
+  remove-unused-boats: false
+  max-age-seconds: 300
+
+ability-optimizer:
+  enabled: false
+  check-interval: 60
+  abilities:
+    mob-spawner:
+      enabled: false
+      interval: 200
+      max-spawned: 4
+      max-scan: 50
+    item-despawn:
+      enabled: false
+      interval: 100
+    leaf-decay:
+      enabled: false
+      instant: true
+    explosion:
+      enabled: false
+      radius: 3
+      max-concurrent: 5
+    redstone:
+      enabled: false
+      max-updates: 100
+      interval: 50
+    hopper:
+      enabled: false
+      max-transfers: 8
+    gravity:
+      enabled: false
+      max-falling: 20
+    rain:
+      enabled: false
+      disable-thunder: true
+    growth:
+      enabled: false
+      crop-growth: false
+      tree-growth: false
+      mushroom-growth: false
+    burning:
+      enabled: false
+      max-fires: 50
+    breeding:
+      enabled: false
+      max-breeding: 10
+      interval: 100
+    teleport:
+      enabled: false
+      max-teleports: 20
+      interval: 50
+    potion:
+      enabled: false
+      max-potions: 30
+      interval: 100
+    arrow:
+      enabled: false
+      max-arrows: 50
+    item-pickup:
+      enabled: false
+      max-pickups: 100
+      interval: 50
+    xp:
+      enabled: false
+      max-orb: 50
+      interval: 50
+
+console-filter:
+  enabled: false
+  filter-rules: []
+
+# Player Movement Optimization
+player-movement-optimizer:
   enabled: true
-  interactive: true
-  show-on-no-args: true
-  header-color: "&6"
-  command-color: "&a"
-  description-color: "&7"
-  clickable-commands: true
+  min-move-interval-ms: 50
+  reduce-updates: true
+  high-ping-threshold: 100
+  very-high-ping-threshold: 500
+  combat-optimization:
+    enabled: true
+    min-attack-interval-ms: 100
+
+# Knockback Sync - Fix knockback for high ping players
+knockback-sync:
+  enabled: true
+  notify_updates: false
+  runnable:
+    enabled: true
+    interval: 5
+    combat_timer: 30
+  spike_threshold: 20
+
+# Spark Profiler - Built-in TPS and system monitoring
+spark-profiler:
+  enabled: true

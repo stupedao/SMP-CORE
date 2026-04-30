@@ -18,18 +18,6 @@ public class PlayerQuitListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        if (!ConfigUtils.getBoolean("join-quit-messages.enabled", true)) {
-            return;
-        }
-
-        if (ConfigUtils.getBoolean("join-quit-messages.hide-quit-messages", false)) {
-            event.setQuitMessage(null);
-        } else {
-            String customMessage = ConfigUtils.getString("join-quit-messages.custom-quit-message", "&e%player% left the game");
-            if (customMessage != null && !customMessage.isEmpty()) {
-                String formattedMessage = customMessage.replace("%player%", event.getPlayer().getName());
-                event.setQuitMessage(MessageUtils.color(formattedMessage));
-            }
-        }
+        event.setQuitMessage(null);
     }
 }

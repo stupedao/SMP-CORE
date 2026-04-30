@@ -40,7 +40,10 @@ public class ListIPCommand implements CommandExecutor {
             String ip = entry.getValue();
 
             Player player = Bukkit.getPlayer(uuid);
-            String playerName = player != null ? player.getName() : "Unknown";
+            String playerName = player != null ? player.getName() : Bukkit.getOfflinePlayer(uuid).getName();
+            if (playerName == null) {
+                playerName = "Unknown";
+            }
 
             sender.sendMessage("  " + playerName + " (" + uuid.toString() + "): " + ip);
         }

@@ -22,19 +22,26 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         var player = event.getPlayer();
         var playerUUID = player.getUniqueId();
-        var playerIP = player.getAddress().getAddress().getHostAddress();
+        java.net.InetSocketAddress addr = player.getAddress();
+        String playerIP = addr != null ? addr.getAddress().getHostAddress() : "unknown";
 
         // Handle join messages
-        if (ConfigUtils.getBoolean("join-quit-messages.enabled", true)) {
-            if (ConfigUtils.getBoolean("join-quit-messages.hide-join-messages", false)) {
-                event.setJoinMessage(null);
+        if (ConfigUtils.getBoolean("join-quit-messages.global.hide-join-messages", false)) {
+            event.setJoinMessage(null);
+        } else if (plugin.getMessageManager().shouldHideJoinMessage(player)) {
+            event.setJoinMessage(null);
+        } else {
+            String customMessage = plugin.getMessageManager().formatJoinMessage(player);
+            if (customMessage != null && !customMessage.isEmpty()) {
+                event.setJoinMessage(org.bukkit.ChatColor.translateAlternateColorCodes('&', customMessage));
             } else {
-                String customMessage = ConfigUtils.getString("join-quit-messages.custom-join-message", "&e%player% joined the game");
-                if (customMessage != null && !customMessage.isEmpty()) {
-                    String formattedMessage = customMessage.replace("%player%", player.getName());
-                    event.setJoinMessage(MessageUtils.color(formattedMessage));
-                }
+                event.setJoinMessage(null);
             }
+        }
+
+        // Auto-IP registration
+        if (plugin.getAutoIPManager().shouldAutoAddPlayer(player)) {
+            plugin.getAutoIPManager().autoAddPlayer(player);
         }
 
         // IP Whitelist checks
@@ -56,8 +63,6 @@ public class PlayerJoinListener implements Listener {
             plugin.getIpWhitelistManager().logJoinAttempt(player, playerIP, true);
             return;
         }
-
-        plugin.getIpWhitelistManager().logJoinAttempt(player, playerIP, false);
 
         if (!plugin.getIpWhitelistManager().isWhitelisted(playerUUID)) {
             String kickMessage = plugin.getIpWhitelistManager().getKickMessage();

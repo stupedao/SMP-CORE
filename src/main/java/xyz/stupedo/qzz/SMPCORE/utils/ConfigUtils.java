@@ -17,6 +17,10 @@ public class ConfigUtils {
         return SMPCORE.getInstance().getConfig().getInt(path, defaultValue);
     }
 
+    public static long getLong(String path, long defaultValue) {
+        return SMPCORE.getInstance().getConfig().getLong(path, defaultValue);
+    }
+
     public static double getDouble(String path, double defaultValue) {
         return SMPCORE.getInstance().getConfig().getDouble(path, defaultValue);
     }

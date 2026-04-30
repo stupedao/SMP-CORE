@@ -37,8 +37,13 @@ public class RemoveIPCommand implements CommandExecutor {
         if (target != null) {
             playerUUID = target.getUniqueId();
         } else {
-            MessageUtils.sendPrefixMessage(sender, "Player not found: " + playerName);
-            return true;
+            var offlinePlayer = Bukkit.getOfflinePlayer(playerName);
+            if (offlinePlayer.hasPlayedBefore()) {
+                playerUUID = offlinePlayer.getUniqueId();
+            } else {
+                MessageUtils.sendPrefixMessage(sender, "Player not found: " + playerName);
+                return true;
+            }
         }
 
         if (plugin.getIpWhitelistManager().removePlayer(playerUUID)) {

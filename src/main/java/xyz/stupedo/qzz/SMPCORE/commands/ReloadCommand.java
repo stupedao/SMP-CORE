@@ -27,20 +27,12 @@ public class ReloadCommand implements CommandExecutor {
         try {
             ConfigUtils.reloadConfig();
 
-            if (plugin.getIpWhitelistManager() != null) {
-                plugin.getIpWhitelistManager().loadWhitelist();
-            }
-
-            if (plugin.getOptimizationManager() != null) {
-                plugin.getOptimizationManager().shutdown();
-            }
-
-            if (plugin.getResourceManager() != null) {
-                plugin.getResourceManager().shutdown();
-            }
+            plugin.reloadManagers();
 
             MessageUtils.sendPrefixMessage(sender, "Configuration reloaded successfully!");
+            MessageUtils.sendPrefixMessage(sender, "Note: For manager configuration changes, a full server restart is recommended.");
             plugin.getLogger().info("Configuration reloaded by " + sender.getName());
+            plugin.getLogger().info("Note: For manager configuration changes, a full server restart is recommended.");
         } catch (Exception e) {
             MessageUtils.sendPrefixMessage(sender, "Error reloading configuration: " + e.getMessage());
             plugin.getLogger().severe("Error reloading configuration: " + e.getMessage());

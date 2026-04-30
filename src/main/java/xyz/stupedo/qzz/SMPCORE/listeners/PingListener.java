@@ -16,6 +16,8 @@ public class PingListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        plugin.getPingManager().removePlayer(event.getPlayer().getUniqueId());
+        if (plugin.getPingManager() != null) {
+            plugin.getPingManager().removePlayer(event.getPlayer().getUniqueId());
+        }
     }
 }

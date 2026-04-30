@@ -42,15 +42,20 @@ public class TPSMonitor {
 
     public void updateTPS() {
         try {
-            double[] recentTPS = new double[]{20.0, 20.0, 20.0};
-            
-            currentTPS = recentTPS[0];
+            double tps = 20.0;
+            try {
+                java.lang.reflect.Method m = org.bukkit.Server.class.getMethod("getTPS");
+                Object result = m.invoke(Bukkit.getServer());
+                if (result instanceof double[]) {
+                    tps = ((double[]) result)[0];
+                }
+            } catch (Exception ignored) {
+            }
+            currentTPS = tps;
             tpsHistory.add(currentTPS);
-
             if (tpsHistory.size() > 60) {
                 tpsHistory.remove(0);
             }
-
             if (shouldLogTPSDrops() && currentTPS < getLowTPSThreshold()) {
                 plugin.getLogger().warning("Low TPS detected: " + String.format("%.2f", currentTPS));
             }
@@ -67,11 +72,7 @@ public class TPSMonitor {
         if (tpsHistory.isEmpty()) {
             return 20.0;
         }
-        double sum = 0;
-        for (double tps : tpsHistory) {
-            sum += tps;
-        }
-        return sum / tpsHistory.size();
+        return tpsHistory.stream().mapToDouble(Double::doubleValue).average().orElse(20.0);
     }
 
     public boolean isLowTPS() {

@@ -20,7 +20,7 @@ public class MemoryManager {
     }
 
     public boolean isEnabled() {
-        return ConfigUtils.getBoolean("resource-optimization.memory-cleanup.enabled", true);
+        return ConfigUtils.getBoolean("resource-optimization.memory-cleanup.enabled", false);
     }
 
     public int getCleanupInterval() {
@@ -44,8 +44,6 @@ public class MemoryManager {
             return;
         }
 
-        plugin.getLogger().info("Performing memory cleanup...");
-
         if (shouldClearCachedData()) {
             clearCachedData();
         }
@@ -59,17 +57,14 @@ public class MemoryManager {
         }
 
         totalCleanups++;
-        plugin.getLogger().info("Memory cleanup completed (Total: " + totalCleanups + ")");
     }
 
     private void clearCachedData() {
         cachedData.clear();
-        plugin.getLogger().info("Cleared cached data");
     }
 
     private void clearUnusedReferences() {
         System.gc();
-        plugin.getLogger().info("Cleared unused references");
     }
 
     private void optimizeCollections() {
@@ -82,7 +77,6 @@ public class MemoryManager {
         if (plugin.getPingManager() != null) {
             plugin.getPingManager().resetStats();
         }
-        plugin.getLogger().info("Optimized collections");
     }
 
     public void cacheData(String key, Object value) {

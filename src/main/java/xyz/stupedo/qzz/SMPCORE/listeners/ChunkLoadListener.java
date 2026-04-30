@@ -17,7 +17,7 @@ public class ChunkLoadListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onChunkLoad(ChunkLoadEvent event) {
-        if (!plugin.getChunkManager().isEnabled()) {
+        if (plugin.getChunkManager() == null || !plugin.getChunkManager().isEnabled()) {
             return;
         }
 
@@ -26,7 +26,7 @@ public class ChunkLoadListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onChunkUnload(ChunkUnloadEvent event) {
-        if (!plugin.getChunkManager().isEnabled()) {
+        if (plugin.getChunkManager() == null || !plugin.getChunkManager().isEnabled()) {
             return;
         }
 

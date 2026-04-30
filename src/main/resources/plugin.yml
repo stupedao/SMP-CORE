@@ -1,43 +1,59 @@
 name: SMPCORE
-version: 1.0.0
+version: 1.1.0
 main: xyz.stupedo.qzz.SMPCORE.SMPCORE
 author: Stupedo
 api-version: 1.21
-description: Advanced Minecraft SMP server optimization plugin with IP whitelist, sleep system, and resource optimization
+description: Advanced Minecraft SMP server optimization plugin with IP whitelist, sleep system, resource optimization, and LagFixer features
+loadbefore:
+  - packetevents
 
 commands:
   smp:
     description: Main SMPCORE command
-    usage: /smp <help|addip|removeip|listip|reload|optimize|resources|bot> [args]
+    usage: /smp <help|addip|removeip|bypassip|listip|autoip|togglejoin|reload|optimize|resources> [args]
     permission: smpcore.use
     aliases: [smpcore]
-  
+
   smpcore:
     description: Legacy SMPCORE command (use /smp instead)
-    usage: /smpcore <help|addip|removeip|listip|reload|optimize|resources|bot> [args]
+    usage: /smpcore <help|addip|removeip|bypassip|listip|autoip|togglejoin|reload|optimize|resources> [args]
     permission: smpcore.use
-  
+
   ping:
     description: Check your ping or another player's ping
     usage: /ping [player|top|stats]
     permission: smpcore.ping
 
+  spark:
+    description: Spark profiler - Show TPS and system info
+    usage: /spark [tps|gc|enable|disable]
+    permission: smpcore.spark
+
 permissions:
   smpcore.use:
     description: Basic permission to use SMPCORE commands
     default: true
-  
+
   smpcore.admin:
     description: Admin permissions for SMPCORE
     default: op
     children:
       smpcore.use: true
       smpcore.ping: true
-  
+      smpcore.spark: true
+
   smpcore.ping:
     description: Permission to use ping command
     default: true
-  
+
+  smpcore.spark:
+    description: Permission to use spark profiler command
+    default: true
+
   smpcore.bot:
     description: Bot bypass permissions
+    default: false
+
+  smpcore.bypass.joinmessages:
+    description: Bypass join/quit message hiding
     default: false

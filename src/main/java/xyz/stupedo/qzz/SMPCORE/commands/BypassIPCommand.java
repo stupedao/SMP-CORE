@@ -68,11 +68,10 @@ public class BypassIPCommand implements CommandExecutor {
         if (target != null) {
             playerUUID = target.getUniqueId();
         } else {
-            // Try to get UUID from offline player
-            try {
-                java.util.UUID uuid = java.util.UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerName).getBytes(java.nio.charset.StandardCharsets.UTF_8));
-                playerUUID = uuid;
-            } catch (Exception e) {
+            var offlinePlayer = Bukkit.getOfflinePlayer(playerName);
+            if (offlinePlayer.hasPlayedBefore()) {
+                playerUUID = offlinePlayer.getUniqueId();
+            } else {
                 MessageUtils.sendPrefixMessage(sender, "Invalid player name: " + playerName);
                 return;
             }
@@ -104,10 +103,10 @@ public class BypassIPCommand implements CommandExecutor {
         if (target != null) {
             playerUUID = target.getUniqueId();
         } else {
-            // Try to get UUID from offline player
-            try {
-                playerUUID = java.util.UUID.nameUUIDFromBytes(("OfflinePlayer:" + playerName).getBytes(java.nio.charset.StandardCharsets.UTF_8));
-            } catch (Exception e) {
+            var offlinePlayer = Bukkit.getOfflinePlayer(playerName);
+            if (offlinePlayer.hasPlayedBefore()) {
+                playerUUID = offlinePlayer.getUniqueId();
+            } else {
                 MessageUtils.sendPrefixMessage(sender, "Invalid player name: " + playerName);
                 return;
             }

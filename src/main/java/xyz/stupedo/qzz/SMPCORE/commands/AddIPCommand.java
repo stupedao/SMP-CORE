@@ -39,7 +39,12 @@ public class AddIPCommand implements CommandExecutor {
         }
 
         UUID playerUUID = target.getUniqueId();
-        String playerIP = target.getAddress().getAddress().getHostAddress();
+        java.net.InetSocketAddress addr = target.getAddress();
+        if (addr == null) {
+            MessageUtils.sendPrefixMessage(sender, "Failed to get player IP address.");
+            return true;
+        }
+        String playerIP = addr.getAddress().getHostAddress();
 
         if (plugin.getIpWhitelistManager().addPlayer(playerUUID, playerIP)) {
             MessageUtils.sendPrefixMessage(sender, "Added " + target.getName() + " (" + playerIP + ") to IP whitelist.");

@@ -7,9 +7,9 @@ import xyz.stupedo.qzz.SMPCORE.SMPCORE;
 import xyz.stupedo.qzz.SMPCORE.utils.ConfigUtils;
 import xyz.stupedo.qzz.SMPCORE.utils.MessageUtils;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 public class IPWhitelistManager {
@@ -19,7 +19,7 @@ public class IPWhitelistManager {
 
     public IPWhitelistManager(SMPCORE plugin) {
         this.plugin = plugin;
-        this.whitelist = new HashMap<>();
+        this.whitelist = new ConcurrentHashMap<>();
         loadWhitelist();
     }
 
@@ -80,7 +80,7 @@ public class IPWhitelistManager {
     }
 
     public Map<UUID, String> getWhitelist() {
-        return new HashMap<>(whitelist);
+        return new ConcurrentHashMap<>(whitelist);
     }
 
     public int getWhitelistSize() {

@@ -17,10 +17,30 @@ public class HelpCommand implements CommandExecutor, TabCompleter {
 
     private final SMPCORE plugin;
     private final HelpMenuBuilder helpMenuBuilder;
+    private final AddIPCommand addipCmd;
+    private final RemoveIPCommand removeipCmd;
+    private final BypassIPCommand bypassipCmd;
+    private final ListIPCommand listipCmd;
+    private final ToggleJoinMessagesCommand togglejoinCmd;
+    private final AutoIPCommand autoipCmd;
+    private final ReloadCommand reloadCmd;
+    private final OptimizeCommand optimizeCmd;
+    private final ResourceCommand resourceCmd;
 
-    public HelpCommand(SMPCORE plugin) {
+    public HelpCommand(SMPCORE plugin, AddIPCommand addipCmd, RemoveIPCommand removeipCmd, BypassIPCommand bypassipCmd,
+                       ListIPCommand listipCmd, ToggleJoinMessagesCommand togglejoinCmd, AutoIPCommand autoipCmd,
+                       ReloadCommand reloadCmd, OptimizeCommand optimizeCmd, ResourceCommand resourceCmd) {
         this.plugin = plugin;
         this.helpMenuBuilder = new HelpMenuBuilder();
+        this.addipCmd = addipCmd;
+        this.removeipCmd = removeipCmd;
+        this.bypassipCmd = bypassipCmd;
+        this.listipCmd = listipCmd;
+        this.togglejoinCmd = togglejoinCmd;
+        this.autoipCmd = autoipCmd;
+        this.reloadCmd = reloadCmd;
+        this.optimizeCmd = optimizeCmd;
+        this.resourceCmd = resourceCmd;
     }
 
     @Override
@@ -46,28 +66,31 @@ public class HelpCommand implements CommandExecutor, TabCompleter {
                 helpMenuBuilder.sendHelpMenu(sender);
                 break;
             case "addip":
-                new AddIPCommand(plugin).onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+                addipCmd.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
                 break;
             case "removeip":
-                new RemoveIPCommand(plugin).onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+                removeipCmd.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
                 break;
             case "bypassip":
-                new BypassIPCommand(plugin).onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+                bypassipCmd.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
                 break;
             case "listip":
-                new ListIPCommand(plugin).onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+                listipCmd.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
                 break;
             case "togglejoin":
-                new ToggleJoinMessagesCommand(plugin).onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+                togglejoinCmd.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+                break;
+            case "autoip":
+                autoipCmd.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
                 break;
             case "reload":
-                new ReloadCommand(plugin).onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+                reloadCmd.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
                 break;
             case "optimize":
-                new OptimizeCommand(plugin).onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+                optimizeCmd.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
                 break;
             case "resources":
-                new ResourceCommand(plugin).onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
+                resourceCmd.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
                 break;
             default:
                 MessageUtils.sendPrefixMessage(sender, "Unknown command. Use /smp help for available commands.");
@@ -87,6 +110,7 @@ public class HelpCommand implements CommandExecutor, TabCompleter {
             completions.add("removeip");
             completions.add("bypassip");
             completions.add("listip");
+            completions.add("autoip");
             completions.add("togglejoin");
             completions.add("reload");
             completions.add("optimize");
@@ -101,6 +125,11 @@ public class HelpCommand implements CommandExecutor, TabCompleter {
                 completions.add("add");
                 completions.add("remove");
                 completions.add("list");
+            } else if (subCommand.equals("autoip")) {
+                completions.add("status");
+                completions.add("enable");
+                completions.add("disable");
+                completions.add("reset");
             } else if (subCommand.equals("togglejoin")) {
                 completions.add("join");
                 completions.add("quit");
