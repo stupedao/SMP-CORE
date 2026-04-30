@@ -150,7 +150,7 @@ The plugin creates a `config.yml` file with all configurable options:
 
 ## Requirements
 
-- Minecraft 1.20.x or higher
+- Minecraft 1.21.x or higher
 - Java 17 or higher
 - Spigot/Paper server
 
